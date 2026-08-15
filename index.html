@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#020b17" />
+  <title>Night D1 Work Links</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="hero panel">
+      <div>
+        <div class="eyebrow"><span class="status-dot"></span> NIGHT SHIFT • D1</div>
+        <h1>Night D1 Work Links</h1>
+        <p>Task form for incident checking, environment monitoring and frequently used work links.</p>
+      </div>
+      <div class="hero-actions">
+        <div id="liveClock" class="clock">--:--:--</div>
+        <button class="btn btn-ghost btn-sm" id="resetAllBtn" type="button">Reset</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="panel task-panel">
+        <div class="section-heading">
+          <div class="heading-left">
+            <span class="step-badge">1</span>
+            <div>
+              <h2>ตรวจสอบอุณหภูมิอุปกรณ์ 3 ตัว / ตรวจสอบ Email เหตุการณ์โจมตีจาก SMOC</h2>
+              <p>กรอกข้อมูลเวร แล้วระบบจะสร้างข้อความสรุปสำหรับ Copy ให้อัตโนมัติ</p>
+            </div>
+          </div>
+          <span class="chip">WORKFLOW</span>
+        </div>
+
+        <div class="form-grid form-grid-4">
+          <label class="field">
+            <span>ช่วงเวลา</span>
+            <select id="shiftSelect">
+              <option value="06.00 - 20.30 น.">Day 06.00 - 20.30</option>
+              <option value="20.30 - 06.00 น.">Night 20.30 - 06.00</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>วันที่</span>
+            <input id="reportDate" type="date" />
+          </label>
+          <label class="field">
+            <span>สถานะเหตุการณ์</span>
+            <select id="eventStatus">
+              <option value="พบ">พบเหตุการณ์</option>
+              <option value="ไม่พบ">ไม่พบเหตุการณ์</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>ผลการตรวจสอบ</span>
+            <select id="serviceStatus">
+              <option value="เว็บไซต์สรรพากรสามารถใช้งานได้ตามปกติ">เว็บไซต์สรรพากรใช้งานปกติ</option>
+              <option value="อยู่ระหว่างตรวจสอบเพิ่มเติม">อยู่ระหว่างตรวจสอบ</option>
+              <option value="พบผลกระทบต่อการใช้งาน">พบผลกระทบ</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="inline-row">
+          <label class="field compact-field">
+            <span>จำนวนเหตุการณ์</span>
+            <input id="eventCount" type="number" min="0" value="0" />
+          </label>
+          <label class="field grow">
+            <span>รายละเอียดเหตุการณ์จาก SMOC / Arbor</span>
+            <input id="incidentDetail" type="text" value="ถูก Block โดย Arbor" />
+          </label>
+        </div>
+
+        <div class="device-grid">
+          <article class="device-card" data-device="0">
+            <div class="device-head">
+              <div>
+                <h3>IT05-C3750X-Intra-Inter</h3>
+                <p>10.1.100.3 • System Temperature</p>
+              </div>
+              <span class="device-pill">SWITCH</span>
+            </div>
+            <div class="device-control">
+              <label class="field grow"><span>Temperature (°C)</span><input class="temp-input" type="number" min="0" max="100" value="32" /></label>
+              <button class="btn btn-ghost copy-config" type="button">Copy Config</button>
+            </div>
+            <div class="health-row"><span class="health-dot"></span><span class="health-text">NORMAL</span></div>
+          </article>
+
+          <article class="device-card" data-device="1">
+            <div class="device-head">
+              <div>
+                <h3>IT06-C9500-CSW1-A01</h3>
+                <p>10.1.100.1 • FL6-Rack A01</p>
+              </div>
+              <span class="device-pill">CORE</span>
+            </div>
+            <div class="device-control">
+              <label class="field grow"><span>Temperature (°C)</span><input class="temp-input" type="number" min="0" max="100" value="44" /></label>
+              <button class="btn btn-ghost copy-config" type="button">Copy Config</button>
+            </div>
+            <div class="health-row"><span class="health-dot"></span><span class="health-text">NORMAL</span></div>
+          </article>
+
+          <article class="device-card" data-device="2">
+            <div class="device-head">
+              <div>
+                <h3>IT06-C9500-CSW2-A02</h3>
+                <p>10.1.100.2 • FL6-Rack A02</p>
+              </div>
+              <span class="device-pill">CORE</span>
+            </div>
+            <div class="device-control">
+              <label class="field grow"><span>Temperature (°C)</span><input class="temp-input" type="number" min="0" max="100" value="47" /></label>
+              <button class="btn btn-ghost copy-config" type="button">Copy Config</button>
+            </div>
+            <div class="health-row"><span class="health-dot"></span><span class="health-text">WARNING</span></div>
+          </article>
+        </div>
+
+        <div class="report-wrap">
+          <label class="field">
+            <span>ข้อความสำหรับ Copy</span>
+            <textarea id="reportOutput" rows="9" spellcheck="false"></textarea>
+          </label>
+          <div class="action-row">
+            <button id="copyReportBtn" class="btn btn-primary" type="button">Copy รายงาน</button>
+            <button id="copyAllConfigBtn" class="btn btn-ghost" type="button">Copy Config ทั้งหมด</button>
+            <button id="clearReportBtn" class="btn btn-ghost" type="button">ล้างข้อมูลเหตุการณ์</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="cards-grid">
+        <article class="panel link-card">
+          <div class="section-heading compact-heading">
+            <div class="heading-left">
+              <span class="step-badge">2</span>
+              <div><h2>ตรวจสอบระบบ ESI / Monitoring</h2><p>เปิดระบบที่ใช้ตรวจสอบสถานะในช่วงเวร</p></div>
+            </div>
+            <span class="chip">MONITOR</span>
+          </div>
+          <div class="url-box" id="urlBox2">https://example.local/monitor</div>
+          <div class="action-row">
+            <button class="btn btn-primary open-url" data-target="urlBox2" type="button">Open Web</button>
+            <button class="btn btn-ghost copy-url" data-target="urlBox2" type="button">Copy Link</button>
+          </div>
+        </article>
+
+        <article class="panel link-card">
+          <div class="section-heading compact-heading">
+            <div class="heading-left">
+              <span class="step-badge">3</span>
+              <div><h2>ตรวจสอบ Email / SMOC</h2><p>สำหรับเปิดเมลและเอกสารประกอบการตรวจสอบ</p></div>
+            </div>
+            <span class="chip">EMAIL</span>
+          </div>
+          <div class="url-box" id="urlBox3">https://mail.google.com/</div>
+          <div class="nested-link">
+            <strong>Script / Note สำหรับใช้ในเวร</strong>
+            <p>เก็บคำสั่ง, รายละเอียดเหตุการณ์ และแนวทางตอบกลับไว้ในจุดเดียว</p>
+            <div class="action-row">
+              <button class="btn btn-primary copy-text" data-copy="show environment temperature status" type="button">Copy Script Command</button>
+              <button class="btn btn-ghost copy-text" data-copy="show environment all" type="button">Copy Script Map</button>
+            </div>
+          </div>
+          <div class="action-row">
+            <button class="btn btn-primary open-url" data-target="urlBox3" type="button">Go Google Email</button>
+            <button class="btn btn-ghost copy-url" data-target="urlBox3" type="button">Copy Link</button>
+          </div>
+        </article>
+
+        <article class="panel link-card">
+          <div class="section-heading compact-heading">
+            <div class="heading-left">
+              <span class="step-badge">4</span>
+              <div><h2>Procedure / Service Notes</h2><p>เอกสารขั้นตอนปฏิบัติงานและบันทึกเวร</p></div>
+            </div>
+            <span class="chip">DOCS</span>
+          </div>
+          <div class="url-box" id="urlBox4">https://docs.google.com/</div>
+          <div class="action-row">
+            <button class="btn btn-primary open-url" data-target="urlBox4" type="button">Go Google Doc</button>
+            <button class="btn btn-ghost copy-url" data-target="urlBox4" type="button">Copy Link</button>
+          </div>
+        </article>
+
+        <article class="panel link-card">
+          <div class="section-heading compact-heading">
+            <div class="heading-left">
+              <span class="step-badge">5</span>
+              <div><h2>Add IP/URL Firewall</h2><p>ลิงก์สำหรับงานเพิ่ม IP / URL และงาน Network Security</p></div>
+            </div>
+            <span class="chip">NETWORK</span>
+          </div>
+          <div class="url-box" id="urlBox5">https://example.local/firewall</div>
+          <p class="tiny-note">* แก้ URL ตัวอย่างเป็น URL จริงของระบบภายในได้จากหน้าเว็บโดยตรง</p>
+          <div class="action-row">
+            <button class="btn btn-primary open-url" data-target="urlBox5" type="button">Go / Add</button>
+            <button class="btn btn-ghost copy-url" data-target="urlBox5" type="button">Copy Link</button>
+          </div>
+        </article>
+      </section>
+
+      <section class="panel custom-links-panel">
+        <div class="section-heading">
+          <div>
+            <h2>เพิ่มลิงก์งานเพิ่มเติม</h2>
+            <p>ลิงก์ที่เพิ่มจะถูกเก็บไว้ในเบราว์เซอร์เครื่องนี้</p>
+          </div>
+          <span class="chip">CUSTOM</span>
+        </div>
+        <form id="customLinkForm" class="custom-form">
+          <label class="field"><span>ชื่อ</span><input id="customName" required placeholder="เช่น PRTG / Zabbix / Ticket" /></label>
+          <label class="field"><span>URL</span><input id="customUrl" required type="url" placeholder="https://..." /></label>
+          <label class="field full"><span>หมายเหตุ</span><textarea id="customNote" rows="3" placeholder="รายละเอียดเพิ่มเติม"></textarea></label>
+          <div class="full action-row"><button class="btn btn-primary" type="submit">เพิ่มลิงก์งาน</button></div>
+        </form>
+        <div id="customLinks" class="custom-links"></div>
+      </section>
+    </main>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  </div>
+  <script src="./app.js"></script>
+</body>
+</html>
