@@ -100,7 +100,7 @@ function buildUI() {
         <span>รูปแบบวันที่</span>
         <select id="dateMode">
           <option value="single">วันเดียว</option>
-          <option value="range">ช่วงวันที่ เช่น 13 - 14 สิงหาคม 2569</option>
+          <option value="range">ช่วงวันที่ 13 - 14 สิงหาคม 2569</option>
         </select>
       </label>
       <label class="field"><span>วันที่เริ่ม</span><input id="reportDate" type="date"></label>
