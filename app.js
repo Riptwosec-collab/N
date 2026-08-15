@@ -11,78 +11,63 @@ const NETFLOW_SHEET = 'https://docs.google.com/spreadsheets/d/1UfpRN9_BTltivyFqu
 const SERVICE_SHEET = 'https://docs.google.com/spreadsheets/d/1PmNbHP_K2yjKsHNJtgr1CUlr1lygfINuRjUz995XhEM/edit?gid=821606506#gid=821606506';
 const IPAM_LINK = 'https://drive.google.com/file/d/1Dwj4jG7KPQ4QnTVQSmoo2WazvW9CwPV1/view?pli=1';
 
-const CHROME_SCRIPT = [
-  '$urls = @(',
-  '    "https://nocorion.rd.go.th/Orion/TrafficAnalysis/NetflowNodeDetails.aspx?NetObject=NN:3677",',
-  '    "https://nocorion.rd.go.th/Orion/TrafficAnalysis/NetflowNodeDetails.aspx?NetObject=NN:3723",',
-  '    "https://nocorion.rd.go.th/Orion/TrafficAnalysis/NetflowNodeDetails.aspx?NetObject=NN:7163",',
-  '    "https://nocorion.rd.go.th/Orion/TrafficAnalysis/NetflowNodeDetails.aspx?NetObject=NN:3843",',
-  '    "https://nocorion.rd.go.th/Orion/TrafficAnalysis/NetflowNodeDetails.aspx?NetObject=NN:3841",',
-  '    "https://nocorion.rd.go.th/Orion/TrafficAnalysis/NetflowNodeDetails.aspx?NetObject=NN:2597",',
-  '    "https://nocorion.rd.go.th/Orion/TrafficAnalysis/NetflowNodeDetails.aspx?NetObject=NN:3853",',
-  '    "https://nocorion.rd.go.th/Orion/TrafficAnalysis/NetflowNodeDetails.aspx?NetObject=NN:3854",',
-  '    "https://nocorion.rd.go.th/Orion/TrafficAnalysis/NetflowNodeDetails.aspx?NetObject=NN:3855",',
-  '    "https://nocorion.rd.go.th/Orion/TrafficAnalysis/NetflowNodeDetails.aspx?NetObject=NN:3856",',
-  '    "https://nocorion.rd.go.th/Orion/TrafficAnalysis/NetflowNodeDetails.aspx?NetObject=NN:3861",',
-  '    "https://nocorion.rd.go.th/Orion/TrafficAnalysis/NetflowNodeDetails.aspx?NetObject=NN:3863",',
-  '    "https://nocorion.rd.go.th/Orion/TrafficAnalysis/NetflowNodeDetails.aspx?NetObject=NN:3865",',
-  '    "https://nocorion.rd.go.th/Orion/TrafficAnalysis/NetflowNodeDetails.aspx?NetObject=NN:3866"',
-  ')',
-  '',
-  '$chromePaths = @(',
-  '    "$env:ProgramFiles\\Google\\Chrome\\Application\\chrome.exe",',
-  '    "${env:ProgramFiles(x86)}\\Google\\Chrome\\Application\\chrome.exe",',
-  '    "$env:LOCALAPPDATA\\Google\\Chrome\\Application\\chrome.exe"',
-  ')',
-  '',
-  '$chrome = $chromePaths |',
-  '    Where-Object { Test-Path $_ } |',
-  '    Select-Object -First 1',
-  '',
-  'if ($chrome) {',
-  '    Start-Process -FilePath $chrome -ArgumentList (@("--new-window") + $urls)',
-  '}',
-  'else {',
-  '    Write-Host "ไม่พบ Google Chrome ในเครื่อง" -ForegroundColor Red',
-  '    Read-Host "กด Enter เพื่อปิด"',
-  '}'
-].join('\n');
+const NETFLOW_URLS = [
+  'https://nocorion.rd.go.th/Orion/TrafficAnalysis/NetflowNodeDetails.aspx?NetObject=NN:3677',
+  'https://nocorion.rd.go.th/Orion/TrafficAnalysis/NetflowNodeDetails.aspx?NetObject=NN:3723',
+  'https://nocorion.rd.go.th/Orion/TrafficAnalysis/NetflowNodeDetails.aspx?NetObject=NN:7163',
+  'https://nocorion.rd.go.th/Orion/TrafficAnalysis/NetflowNodeDetails.aspx?NetObject=NN:3843',
+  'https://nocorion.rd.go.th/Orion/TrafficAnalysis/NetflowNodeDetails.aspx?NetObject=NN:3841',
+  'https://nocorion.rd.go.th/Orion/TrafficAnalysis/NetflowNodeDetails.aspx?NetObject=NN:2597',
+  'https://nocorion.rd.go.th/Orion/TrafficAnalysis/NetflowNodeDetails.aspx?NetObject=NN:3853',
+  'https://nocorion.rd.go.th/Orion/TrafficAnalysis/NetflowNodeDetails.aspx?NetObject=NN:3854',
+  'https://nocorion.rd.go.th/Orion/TrafficAnalysis/NetflowNodeDetails.aspx?NetObject=NN:3855',
+  'https://nocorion.rd.go.th/Orion/TrafficAnalysis/NetflowNodeDetails.aspx?NetObject=NN:3856',
+  'https://nocorion.rd.go.th/Orion/TrafficAnalysis/NetflowNodeDetails.aspx?NetObject=NN:3861',
+  'https://nocorion.rd.go.th/Orion/TrafficAnalysis/NetflowNodeDetails.aspx?NetObject=NN:3863',
+  'https://nocorion.rd.go.th/Orion/TrafficAnalysis/NetflowNodeDetails.aspx?NetObject=NN:3865',
+  'https://nocorion.rd.go.th/Orion/TrafficAnalysis/NetflowNodeDetails.aspx?NetObject=NN:3866'
+];
 
-const EDGE_SCRIPT = [
-  '$urls = @(',
-  '    "https://nocorion.rd.go.th/Orion/TrafficAnalysis/NetflowNodeDetails.aspx?NetObject=NN:3677",',
-  '    "https://nocorion.rd.go.th/Orion/TrafficAnalysis/NetflowNodeDetails.aspx?NetObject=NN:3723",',
-  '    "https://nocorion.rd.go.th/Orion/TrafficAnalysis/NetflowNodeDetails.aspx?NetObject=NN:7163",',
-  '    "https://nocorion.rd.go.th/Orion/TrafficAnalysis/NetflowNodeDetails.aspx?NetObject=NN:3843",',
-  '    "https://nocorion.rd.go.th/Orion/TrafficAnalysis/NetflowNodeDetails.aspx?NetObject=NN:3841",',
-  '    "https://nocorion.rd.go.th/Orion/TrafficAnalysis/NetflowNodeDetails.aspx?NetObject=NN:2597",',
-  '    "https://nocorion.rd.go.th/Orion/TrafficAnalysis/NetflowNodeDetails.aspx?NetObject=NN:3853",',
-  '    "https://nocorion.rd.go.th/Orion/TrafficAnalysis/NetflowNodeDetails.aspx?NetObject=NN:3854",',
-  '    "https://nocorion.rd.go.th/Orion/TrafficAnalysis/NetflowNodeDetails.aspx?NetObject=NN:3855",',
-  '    "https://nocorion.rd.go.th/Orion/TrafficAnalysis/NetflowNodeDetails.aspx?NetObject=NN:3856",',
-  '    "https://nocorion.rd.go.th/Orion/TrafficAnalysis/NetflowNodeDetails.aspx?NetObject=NN:3861",',
-  '    "https://nocorion.rd.go.th/Orion/TrafficAnalysis/NetflowNodeDetails.aspx?NetObject=NN:3863",',
-  '    "https://nocorion.rd.go.th/Orion/TrafficAnalysis/NetflowNodeDetails.aspx?NetObject=NN:3865",',
-  '    "https://nocorion.rd.go.th/Orion/TrafficAnalysis/NetflowNodeDetails.aspx?NetObject=NN:3866"',
-  ')',
-  '',
-  '$edgePaths = @(',
-  '    "$env:ProgramFiles\\Microsoft\\Edge\\Application\\msedge.exe",',
-  '    "${env:ProgramFiles(x86)}\\Microsoft\\Edge\\Application\\msedge.exe"',
-  ')',
-  '',
-  '$edge = $edgePaths |',
-  '    Where-Object { Test-Path $_ } |',
-  '    Select-Object -First 1',
-  '',
-  'if ($edge) {',
-  '    Start-Process -FilePath $edge -ArgumentList (@("--new-window") + $urls)',
-  '}',
-  'else {',
-  '    Write-Host "ไม่พบ Microsoft Edge ในเครื่อง" -ForegroundColor Red',
-  '    Read-Host "กด Enter เพื่อปิด"',
-  '}'
-].join('\n');
+function makeBrowserScript(browser) {
+  const isChrome = browser === 'chrome';
+  const varName = isChrome ? 'chrome' : 'edge';
+  const displayName = isChrome ? 'Google Chrome' : 'Microsoft Edge';
+  const paths = isChrome
+    ? [
+        '    "$env:ProgramFiles\\Google\\Chrome\\Application\\chrome.exe",',
+        '    "${env:ProgramFiles(x86)}\\Google\\Chrome\\Application\\chrome.exe",',
+        '    "$env:LOCALAPPDATA\\Google\\Chrome\\Application\\chrome.exe"'
+      ]
+    : [
+        '    "$env:ProgramFiles\\Microsoft\\Edge\\Application\\msedge.exe",',
+        '    "${env:ProgramFiles(x86)}\\Microsoft\\Edge\\Application\\msedge.exe"'
+      ];
+
+  return [
+    '$urls = @(',
+    ...NETFLOW_URLS.map((url, i) => `    "${url}"${i < NETFLOW_URLS.length - 1 ? ',' : ''}`),
+    ')',
+    '',
+    `$${varName}Paths = @(`,
+    ...paths,
+    ')',
+    '',
+    `$${varName} = $${varName}Paths |`,
+    '    Where-Object { Test-Path $_ } |',
+    '    Select-Object -First 1',
+    '',
+    `if ($${varName}) {`,
+    `    Start-Process -FilePath $${varName} -ArgumentList (@("--new-window") + $urls)`,
+    '}',
+    'else {',
+    `    Write-Host "ไม่พบ ${displayName} ในเครื่อง" -ForegroundColor Red`,
+    '    Read-Host "กด Enter เพื่อปิด"',
+    '}'
+  ].join('\n');
+}
+
+const CHROME_SCRIPT = makeBrowserScript('chrome');
+const EDGE_SCRIPT = makeBrowserScript('edge');
 
 const $ = (s, root = document) => root.querySelector(s);
 const $$ = (s, root = document) => [...root.querySelectorAll(s)];
@@ -95,6 +80,7 @@ function buildUI() {
     .chip.done{color:#9ff1c8;border-color:rgba(35,209,127,.55);background:rgba(35,209,127,.08)}
     .link-card.is-done{border-color:rgba(35,209,127,.55)}
     .path-box{font-family:"SFMono-Regular",Consolas,monospace}
+    .date-end-field.is-hidden{display:none}
   </style>`);
 
   $('.task-panel').innerHTML = `
@@ -110,8 +96,15 @@ function buildUI() {
     </div>
 
     <div class="form-grid form-grid-4">
-      <label class="field"><span>รูปแบบวันที่</span><select id="dateMode"><option>วันเดียว</option></select></label>
+      <label class="field">
+        <span>รูปแบบวันที่</span>
+        <select id="dateMode">
+          <option value="single">วันเดียว</option>
+          <option value="range">ช่วงวันที่ เช่น 13 - 14 สิงหาคม 2569</option>
+        </select>
+      </label>
       <label class="field"><span>วันที่เริ่ม</span><input id="reportDate" type="date"></label>
+      <label class="field date-end-field is-hidden"><span>วันที่สิ้นสุด</span><input id="reportEndDate" type="date"></label>
       <label class="field"><span>ช่วงเวลา</span><select id="shiftSelect"><option value="06.00 - 20.30 น.">06.00 - 20.30 น.</option><option value="20.30 - 06.00 น.">20.30 - 06.00 น.</option></select></label>
       <label class="field"><span>เหตุการณ์โจมตี</span><select id="eventStatus"><option value="blocked">พบเหตุการณ์ ถูก Block โดย Arbor</option><option value="none">ไม่พบเหตุการณ์โจมตี</option></select></label>
     </div>
@@ -211,11 +204,70 @@ function buildUI() {
   if (custom) custom.remove();
 }
 
+const THAI_MONTHS = ['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
+
+function parseLocalDate(dateValue) {
+  if (!dateValue) return null;
+  const [year, month, day] = dateValue.split('-').map(Number);
+  return new Date(year, month - 1, day);
+}
+
 function thaiDateLong(dateValue) {
-  if (!dateValue) return '-';
-  const d = new Date(`${dateValue}T00:00:00`);
-  const months = ['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
-  return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear() + 543}`;
+  const d = parseLocalDate(dateValue);
+  if (!d) return '-';
+  return `${d.getDate()} ${THAI_MONTHS[d.getMonth()]} ${d.getFullYear() + 543}`;
+}
+
+function thaiDateRange(startValue, endValue) {
+  const start = parseLocalDate(startValue);
+  const end = parseLocalDate(endValue);
+  if (!start) return '-';
+  if (!end || start.getTime() === end.getTime()) return thaiDateLong(startValue);
+
+  const startDay = start.getDate();
+  const endDay = end.getDate();
+  const startMonth = THAI_MONTHS[start.getMonth()];
+  const endMonth = THAI_MONTHS[end.getMonth()];
+  const startYear = start.getFullYear() + 543;
+  const endYear = end.getFullYear() + 543;
+
+  if (start.getFullYear() === end.getFullYear() && start.getMonth() === end.getMonth()) {
+    return `${startDay} - ${endDay} ${endMonth} ${endYear}`;
+  }
+  if (start.getFullYear() === end.getFullYear()) {
+    return `${startDay} ${startMonth} - ${endDay} ${endMonth} ${endYear}`;
+  }
+  return `${startDay} ${startMonth} ${startYear} - ${endDay} ${endMonth} ${endYear}`;
+}
+
+function getReportDateText() {
+  return $('#dateMode').value === 'range'
+    ? thaiDateRange($('#reportDate').value, $('#reportEndDate').value)
+    : thaiDateLong($('#reportDate').value);
+}
+
+function addDaysISO(dateValue, days) {
+  const d = parseLocalDate(dateValue);
+  if (!d) return todayISO();
+  d.setDate(d.getDate() + days);
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${y}-${m}-${day}`;
+}
+
+function syncDateModeUI(autoFill = false) {
+  const isRange = $('#dateMode').value === 'range';
+  const endField = $('.date-end-field');
+  endField.classList.toggle('is-hidden', !isRange);
+  $('#reportEndDate').min = $('#reportDate').value || '';
+
+  if (isRange && autoFill && !$('#reportEndDate').value) {
+    $('#reportEndDate').value = addDaysISO($('#reportDate').value, 1);
+  }
+  if (isRange && $('#reportEndDate').value && $('#reportDate').value && $('#reportEndDate').value < $('#reportDate').value) {
+    $('#reportEndDate').value = $('#reportDate').value;
+  }
 }
 
 function tempState(temp) {
@@ -235,7 +287,7 @@ function updateDeviceStates() {
 }
 
 function makeReport() {
-  const date = thaiDateLong($('#reportDate').value);
+  const date = getReportDateText();
   const shift = $('#shiftSelect').value;
   const count = Math.max(0, Number($('#eventCount').value || 0));
   const blocked = $('#eventStatus').value === 'blocked';
@@ -265,7 +317,9 @@ function getState() {
 function saveState() {
   const old = getState();
   localStorage.setItem(STORAGE_KEY, JSON.stringify({
+    dateMode: $('#dateMode').value,
     date: $('#reportDate').value,
+    endDate: $('#reportEndDate').value,
     shift: $('#shiftSelect').value,
     eventStatus: $('#eventStatus').value,
     eventCount: $('#eventCount').value,
@@ -275,6 +329,7 @@ function saveState() {
 }
 
 function refreshReport() {
+  syncDateModeUI(false);
   $('#reportOutput').value = makeReport();
   updateDeviceStates();
   saveState();
@@ -328,18 +383,29 @@ function setTaskDone(task, done) {
 
 function loadState() {
   const s = getState();
+  $('#dateMode').value = s.dateMode || 'single';
   $('#reportDate').value = s.date || todayISO();
+  $('#reportEndDate').value = s.endDate || '';
   $('#shiftSelect').value = s.shift || '06.00 - 20.30 น.';
   $('#eventStatus').value = s.eventStatus || 'blocked';
   $('#eventCount').value = s.eventCount ?? 1;
   if (Array.isArray(s.temps)) {
     $$('.temp-input').forEach((el, i) => { if (s.temps[i] != null) el.value = s.temps[i]; });
   }
+  syncDateModeUI($('#dateMode').value === 'range');
   [2,3,4,5].forEach(task => updateTaskUI(task, Boolean(s.completed?.[task])));
 }
 
 function attachEvents() {
-  ['#reportDate','#shiftSelect','#eventStatus','#eventCount'].forEach(s => $(s).addEventListener('input', refreshReport));
+  $('#dateMode').addEventListener('change', () => {
+    syncDateModeUI(true);
+    refreshReport();
+  });
+  $('#reportDate').addEventListener('input', () => {
+    syncDateModeUI($('#dateMode').value === 'range');
+    refreshReport();
+  });
+  ['#reportEndDate','#shiftSelect','#eventStatus','#eventCount'].forEach(s => $(s).addEventListener('input', refreshReport));
   $$('.temp-input').forEach(el => el.addEventListener('input', refreshReport));
 
   $('#copyConfigBtn').addEventListener('click', () => copyText(CONFIG_COMMAND, `Copy "${CONFIG_COMMAND}" แล้ว`));
