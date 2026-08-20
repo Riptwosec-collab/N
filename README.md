@@ -1,18 +1,16 @@
-# Night D1 Work Links
+# Night Shift Hub
 
-เว็บหน้าเดียวโทน Dark / Neon Cyan ทำตามภาพตัวอย่าง พร้อมฟังก์ชันใช้งานจริง:
+เว็บสำหรับงาน Night Shift โทน Dark / Neon Cyan รวมเครื่องมือและลิงก์งานที่ใช้บ่อยไว้ในหน้าเดียว
 
-- กรอกวันที่, ช่วงเวลา, จำนวนเหตุการณ์ และสถานะ
-- กรอกอุณหภูมิ Switch/Core 3 ตัว
-- สร้างข้อความรายงานอัตโนมัติ
-- Copy รายงาน / Copy Cisco environment commands
-- เปิดและ Copy Work Links
-- แก้ URL ได้โดยคลิกที่ URL บนหน้าเว็บ
-- เพิ่มลิงก์งานเพิ่มเติมได้
-- บันทึกค่าลง localStorage ของเบราว์เซอร์
+- ตรวจสอบและบันทึกอุณหภูมิอุปกรณ์ 3 ตัว
+- สร้างข้อความรายงานตามวันที่/ช่วงวันที่และช่วงเวลา
+- Copy รายงานและ Cisco environment command
+- เปิด Work Links และ Google Sheet ที่เกี่ยวข้อง
+- เปิด NetFlow 14 จุดแบบกดทีละลิงก์
+- บันทึกสถานะงานและค่าที่กรอกไว้ใน localStorage
 - Responsive สำหรับ Desktop / Tablet / Mobile
 
 ## ใช้งาน
-เปิด `index.html` ด้วย Chrome/Edge ได้ทันที
+เปิด `index.html` ด้วย Chrome/Edge ได้ทันที หรือ Deploy ผ่าน Vercel
 
-ถ้าจะ Deploy ขึ้น Vercel/Netlify/GitHub Pages ให้อัปโหลดไฟล์ทั้งโฟลเดอร์นี้ได้เลย
+Repository: `Riptwosec-collab/night-shift-hub`
